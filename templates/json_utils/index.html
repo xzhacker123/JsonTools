@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static "js/jquery-3.2.0.min.js"%}">
+{#    <script type="text/javascript" src="E:\PycharmProjectst\wds_backstage\static\jquery-3.2.0.min.js">#}
+    </script>
+</head>
+<body>
+    <form method='post'>
+    {% csrf_token %}
+        <table >
+            <tr>
+                {{ form.request_method }}
+            </tr>
+            <tr>
+                <td>Url:{{ form.url }}</td>
+            </tr>
+            <tr>
+                <td>Body:{{ form.body }}</td>
+            </tr>
+            <tr>
+                <td>Headers:{{ form.body }}</td>
+            </tr>
+            <tr><td><input type="submit" value="提交" class="sumbit"></td></tr>
+
+{#            <tr><td><textarea rows="30" cols="100">{{ form.response }}</textarea></td></tr>#}
+            <tr><td><textarea rows="30" cols="100" class="result">{{ form.url.value }}</textarea></td></tr>
+        </table>
+    </form>
+</body>
+</html>
+<script type="text/javascript">
+    $(function(){
+        //按钮单击时执行
+        $(".sumbit2").click(function(){
+              //取Ajax返回结果
+              //为了简单，这里简单地从文件中读取内容作为返回数据
+               //显示Ajax返回结果
+               $(".result").html("hahahhahah");
+               //$("#myDiv").load("demo_test.txt");
+         });
+    });
+</script>

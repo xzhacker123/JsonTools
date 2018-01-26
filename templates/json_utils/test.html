@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css"%}">
+    <script src="{% static "js/jquery-3.2.0.min.js"%}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.min.js"%}"></script>
+
+  </head>
+
+  <body>
+    <h1>JsonTools</h1>
+    <div>
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">2013</a></li>
+            <li class="active">十一月</li>
+        </ol>
+    </div>
+    <form role="form">
+        <!---->
+        <div class="row">
+            <div class="col-md-1">
+                <select class="form-control" id="reqmethod" name="reqmethod" style="width:100px;height: 35px">
+                    <option value="0">GET</option>
+                    <option value="1">POST</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <input type="text" id="url" name="url"  class="form-control " placeholder="请输入url">
+            </div>
+            <div class="col-md-1">
+                <button type="submit" id="submit" class="btn btn-primary">Send</button><br>
+            </div>
+        </div>
+
+        <!--headers, body导航栏-->
+        <div class="row">
+            <div class="col-md-8">
+                <ul id = "tab" class="nav nav-tabs">
+                    <li class="active"><a href="#headers" data-toggle="tab">Headers</a></li>
+                    <li><a href="#body" data-toggle="tab">Body</a></li>
+                </ul>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="tab-content col-md-8">
+          <div class="tab-pane active" id="headers">
+              <div class="panel panel-default">
+                  <div class="row">
+                    <textarea class="col-md-9" rows="4" placeholder="请输入Headers"></textarea>
+                    <textarea class="col-md-3" rows="4" placeholder="Headers参数化"></textarea>
+                  </div>
+              </div>
+
+{#              <div class="panel panel-default">#}
+{#                  <textarea class="form-control" rows="5" placeholder="请输入Headers"></textarea>#}
+{#              </div>#}
+          </div>
+          <div class="tab-pane" id="body">
+              <div class="panel panel-default">
+                  <div class="row">
+                      <textarea class="col-md-9" rows="4" placeholder="请输入Body"></textarea>
+                      <textarea class="col-md-3" rows="4" placeholder="Body参数化"></textarea>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <input type="text" id="url" name="url"  class="form-control " placeholder="请输入jsonpath">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <textarea class="form-control" rows="2" placeholder="查询条件表达式"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <textarea class="form-control" rows="8" placeholder="查询结果"></textarea>
+        </div>
+    </div>
+  </body>
+</html>
+
+

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+
+    function AjaxSubmit(){
+        var host = '1.1.1.1';
+        var port = '1111';
+
+        if ($("#TxtPassword").val() == "") {
+                alert("密码不能为空！");
+                $("#TxtPassword").focus();
+                return false;
+            }
+
+        $.ajax({
+            $("#TxtPassword").val(""),
+
+            type:'GET',
+            data:{host:host,port:port},
+            success: function (arg) {
+            }
+
+        });
+    }
+</script>
+<input type="button" onclick="AjaxSubmit();" value="提交" id="TxtUserName">
+
+<script src="E:\PycharmProjectst\wds_backstage\wds_backstage\static\jquery-3.2.1.min.js"></script>
+{#<script src="/static/jquery-3.2.1.min.js"></script>#}
+{#<script src="/json_utils/jquery-3.2.1.js"></script>#}
+
+
+</body>
+</html>

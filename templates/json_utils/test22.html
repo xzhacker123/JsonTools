@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>tab页效果</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<style type="text/css">
+{#.wrap{border: 1px solid #eee;min-width: 400px; min-height: 400px;}#}
+{#.tab span{border: 1px solid #ccc;width: 100px;height: 30px;padding-left:0px;margin: 10PX 10PX;}#}
+{#.info{border: 1px dashed    #006400 ;margin: 20px 0px;}#}
+{#.h30{height: 30px;}#}
+.huangse{background-color:#FFFF00 ;}
+{#.qianlv{background-color: #F5FFFA ;}#}
+</style>
+</head>
+<body>
+
+    <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+  </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="home">..home.</div>
+      <div class="tab-pane" id="profile">..profile.</div>
+      <div class="tab-pane" id="messages">..messages.</div>
+      <div class="tab-pane" id="settings">..settings.</div>
+    </div>
+
+<!--
+<script>
+      $(function () {
+        $('#myTab a:last').tab('show');//初始化显示哪个tab
+
+        $('#myTab a').click(function (e) {
+          e.preventDefault();//阻止a链接的跳转行为
+          $(this).tab('show');//显示当前选中的链接及关联的content
+        })
+      })
+    </script>
+-->
+
+<!-- tab页切换结束-->
+</body>
+
+</html>

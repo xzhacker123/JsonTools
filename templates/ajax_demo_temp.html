@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<body>
+{% comment %}<form action="/add/" method="post" id="my_form">{% endcomment %}
+<form id="my_form">
+    {% csrf_token %}
+    <select id="reqmethod" name="reqmethod" style="width:100px;height: 25px">
+    <option value="0">GET</option>
+    <option value="1">POST</option>
+    </select>
+    <input type="text" id="url" name="url" style="width:550px;height: 20px" >
+    <button type="submit" id='sum' style="width:60px;height: 25px">Send</button> <br>
+    <a>Body:</a> <br>
+    <textarea id="body" rows="6" cols="100" ></textarea> <br>
+    <a>Headers</a> <br>
+    <textarea id="headers" rows="6" cols="100" ></textarea> <br>
+    <a>条件表达式</a> <br>
+    <textarea id="expressions" rows="6" cols="100" ></textarea> <br>
+    <a>JSON_PATH:</a> <input type="text" id="json_path" name="json_path" style="width:620px;height: 18px" > <br>
+    <textarea rows="30" cols="100" id="results"></textarea>
+</form>
+
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static "js/jquery-3.2.0.min.js"%}"></script>
+    <script type="text/javascript" src="{% static "js/jq-cookie/jquery.cookie.js"%}"></script>
+    <script>
+        $.ajaxSetup({
+        beforeSend: function(xhr, settings){
+          var csrftoken = $.cookie('csrftoken');
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+        });
+    $(document).ready(function(){
+        $("#sum").click(function(){
+            var reqmethod = $("#reqmethod").val();
+            var url = $("#url").val();
+            var body = $("#body").val();
+            var headers = $("#headers").val();
+            var expressions = $("#expressions").val();
+            var json_path = $("#json_path").val();
+
+            $.post("/plus/",{'url':url,'body':body,'headers':headers,'reqmethod':reqmethod, 'json_path':json_path,
+                'expressions':expressions}, function(ret){
+                var _json = ret.toJSONString();
+                console.log(_json.body);
+                console.log(ret);
+                $('#body').html(ret.body);
+                $('#results').html(ret.response);
+            })
+        });
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script type="text/javascript" src="E://PycharmProjectst//wds_backstage//templates//json_utils//jquery-3.2.0.min.js">
+</script>
+
+</head>
+    <body>
+        <div id="myDiv"><h2>通过 AJAX 改变文本</h2></div>
+        <button id="testAjax" type="button">Ajax改变内容</button>
+    </body>
+</html>
+<script type="text/javascript">
+    $(function(){
+        //按钮单击时执行
+        $("#testAjax").click(function(){
+              //取Ajax返回结果
+              //为了简单，这里简单地从文件中读取内容作为返回数据
+               //显示Ajax返回结果
+               $("#myDiv").html("dddddddddddd");
+               //$("#myDiv").load("demo_test.txt");
+         });
+    });
+</script>

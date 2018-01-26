@@ -1,0 +1,93 @@
+{
+  " abstractTitle" : " string" ,
+  " acceptCategory" : " string" ,
+  "acceptGoodsInfo": "{
+    "acceptGoodsIds": [
+      0
+    ],
+    "acceptGoodsType": 0
+  }",
+  "amountType": 0,
+  "appChannel": 0,
+  "canGiveFriend": 0,
+  "canUseWithOtherDiscount": true,
+  "cardTemplateId": 0,
+  "cashTicketAmt": 0,
+  "cashTicketCondition": 1,
+  " centerSubTitle" : " string" ,
+  " centerTitle" : " string" ,
+  " centerUrl" : " string" ,
+  "centerUrlType": 0,
+  "colorType": 1,
+  " customUrl" : " string" ,
+  " customUrlName" :  "string" ,
+  " customUrlSubName" : " string" ,
+  "customUrlType": 0,
+  " detail" : " string" ,
+  "discount": 0,
+  "discountType": 0,
+  "expDayCount": 2,
+  " expireDate" : " 2017-11-28T05:56:31.584Z" ,
+  "expireDateType": 2,
+  " iconUrl" : " string" ,
+  " logoUrl" : " http://o2o.img.weimob.com/1111/a64f55db-2c5c-4540-94ae-f61523678122.jpg" ,
+  "maxCashTicketAmt": 0,
+  "maxDiscount": 0,
+  "maxDiscountAmount": 0,
+  " merchantName" : " 测试" ,
+  "minCashTicketAmt": 0,
+  "minDiscount": 0,
+  " name" : " 测试1204" ,
+  " objectUseFor" : " string" ,
+  "operatorId": "string",
+  "pid": 280,
+  "promotionUrl": "tring",
+  "promotionUrlName": "string",
+  "promotionUrlSubName": "string",
+  "promotionUrlType": 0,
+  "publishChannels":0,
+  "rejectCategory": "string",
+  "servicePhone": "string",
+ "serviceType": 4,
+  "source": 1,
+  "startDate": "2017-11-28T05:56:31.585Z",
+  "startDayCount": 0,
+  "status": 0,
+  "storeIds": 0,
+  "storePoiIds": "string",
+  "subName": "string",
+  "syncInfos": 
+   " {
+      "appId": "",
+      "channel": 0
+    } ",
+  "syncType": 0,
+  "textImages": "
+    "{
+      "alipayImageId": "string",
+      "imageUrl": "string",
+      "text": "string",
+      "wechatImageUrl": "string"
+    }",
+  "totalCount":11,
+  "type": 3,
+  "usabletime": "{
+    "beginHour": 9,
+    "beginMinute": 6,
+    "endHour": 21,
+    "endMinute": 30,
+    "weekDay": [
+      3,4,5,6
+    ]
+  }',
+  "useAllStore": true,
+  "useChannels": 0 ,
+  "useNotice": "string",
+  "userGuide": "操作提示必填",
+  "userTakeLimit": 1,
+  "uuid": "string",
+  "version": 0,
+  "wechatAbstractTitle": "string",
+  "wechatIconUrl": "string",
+  "wechatLogoUrl": "http://o2o.img.weimob.com/1111/a64f55db-2c5c-4540-94ae-f61523678122.jpg"
+}

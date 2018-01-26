@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>tab页效果</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css"%}">
+    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap-table.min.css"%}">
+    <script src="{% static "bootstrap/js/jquery-3.2.0.min.js"%}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.min.js"%}"></script>
+    <script src="{% static "js/laydate/laydate.js"%}"></script>
+<style type="text/css">
+{#.wrap{border: 1px solid #eee;min-width: 400px; min-height: 400px;}#}
+{#.tab span{border: 1px solid #ccc;width: 100px;height: 30px;padding-left:0px;margin: 10PX 10PX;}#}
+{#.info{border: 1px dashed    #006400 ;margin: 20px 0px;}#}
+{#.h30{height: 30px;}#}
+.huangse{background-color:#FFFF00 ;}
+{#.qianlv{background-color: #F5FFFA ;}#}
+</style>
+</head>
+<body>
+
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+      <li><a href="#profile" data-toggle="tab">Profile</a></li>
+      <li><a href="#messages" data-toggle="tab">Messages</a></li>
+      <li><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="home">..home.</div>
+      <div class="tab-pane" id="profile">..profile.</div>
+      <div class="tab-pane" id="messages">..messages.</div>
+      <div class="tab-pane" id="settings">..settings.</div>
+    </div>
+    <div>
+        <input type="text" class="demo-input" placeholder="请选择日期" id="test1">
+    </div>
+<!--
+<script>
+      $(function () {
+        $('#myTab a:last').tab('show');//初始化显示哪个tab
+
+        $('#myTab a').click(function (e) {
+          e.preventDefault();//阻止a链接的跳转行为
+          $(this).tab('show');//显示当前选中的链接及关联的content
+        })
+      })
+    </script>
+-->
+
+{#<div class="h30"></div>#}
+<!-- tab切换源start -->
+    <ul id = "tab" class="nav nav-tabs">
+        <li class="active"><a href="#Headers" data-toggle="tab">Headers</a></li>
+        <li><a href="#Body" data-toggle="tab">Body</a></li>
+    </ul>
+{#<div id="tab" class="nav nav-tabs">#}
+{#    <span class="huangse">中文版tab</span>#}
+{#    <span class="">英文版tab</span>#}
+{#    <span class="">韩语版tab</span>#}
+{#    #}
+{#</div>#}
+<!-- tab切换源end -->
+<!-- 切换显示start -->
+    <div class="info">
+        <p>1.info one</p>
+        <p>2.中文版</p>
+    </div>
+    <div class="info" style="display: none">
+        <p>1.info two</p>
+        <p>2.英文版</p>
+    </div>
+</div>
+<!-- 切换显示end -->
+</div>
+<!-- tab页切换结束-->
+<div>
+
+
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+    /****遍历*****/
+        $("#tab").find("li").each(function(index,element){
+            /****绑定事件*******/
+            $(this).click(function(e){
+                /****触发事件的显示控制****/
+                $(this).addClass("huangse").siblings().removeClass();
+                $(this).parent().parent().find(".info").eq(index).show().siblings(".info").hide();
+            })
+        })
+    })
+</script>
+<script>
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#test1' //指定元素
+          ,type: 'datetime'
+        });
+        </script>
+</html>

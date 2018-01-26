@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+{#{% include "json_utils/_head_js_css.html" %}#}
+<head>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css"%}">
+    <script src="{% static "js/jquery-3.2.0.min.js"%}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.min.js"%}"></script>
+    <script src="{% static "js/laydate/laydate.js"%}"></script>
+    <style type="text/css">
+    #title{
+        font-size: 25px;
+    }
+    #headers, #body,#headers_param, #body_param {
+        border: 0px;
+    }
+    .col-center-block {
+        float: none;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .col-left-block {
+        margin-left: 0px;
+    }
+    .col-right-block {
+        float: none;
+        display: block;
+        margin-right: 0px;
+        margin-bottom: 0px;
+        margin-left: auto;
+    }
+    .myrow {
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+    </style>
+</head>
+<body>
+{% comment %}<form action="/add/" method="post" id="my_form">{% endcomment %}
+
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+                <form role="form" id="my_timestamp_form" action="" method="post">
+                    <div class="row">
+                        <div class="col-md-2"><h1 id="title">JsonTools</h1></div>
+
+                        <div class="col-md-5 col-md-offset-1">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control container-fluid" name="usual_times" placeholder="请选择日期" id="usual_times">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" id="btn_time" class="btn btn-default">←→</button>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control col-right-block" name="unix_times" placeholder="时间戳" id="unix_times">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form role="form" id="my_form" action="" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-1">
+                            <select class="form-control" id="reqmethod" name="reqmethod" style="width:100px;height: 35px">
+                                <option value="0">GET</option>
+                                <option value="1">POST</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="url" name="url"  class="form-control" placeholder="请输入url">
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" id="submit" class="btn btn-primary col-right-block">Send</button><br>
+                        </div>
+                    </div>
+
+                    <!--headers, body导航栏-->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <ul id = "tab" class="nav nav-tabs">
+                                <li class="active"><a href="#headers_panel" data-toggle="tab">Headers</a></li>
+                                <li><a href="#body_panel" data-toggle="tab">Body</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="tab-content col-md-8">
+                          <div class="tab-pane active" id="headers_panel">
+                              <div class="panel panel-default">
+                                  <div class="panel-body">
+                                      <div class="row">
+                                        <textarea id="headers" name="headers" class="col-md-9" rows="4" placeholder="请输入Headers"></textarea>
+                                        <textarea id="headers_param" name="headers_param" class="col-md-3" rows="4" placeholder="Headers参数化"></textarea>
+                                      </div>
+                                  </div>
+                              </div>
+
+                          </div>
+                          <div class="tab-pane" id="body_panel">
+                              <div class="panel panel-default">
+                                  <div class="panel-body">
+                                      <div class="row">
+                                          <textarea id="body" name="body" class="col-md-9" rows="4" placeholder="请输入Body"></textarea>
+                                          <textarea id="body_param" name="body_param" class="col-md-3" rows="4" placeholder="Body参数化"></textarea>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                    <!--jsonPath-->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input type="text" id="json_path" name="json_path"  class="form-control " placeholder="请输入jsonpath">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <textarea id="expressions" name="expressions" class="form-control" rows="2" placeholder="查询条件表达式"></textarea>
+                        </div>
+                    </div>
+                    <!--查询结果-->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <textarea id="results" name="results" class="form-control" rows="11" placeholder="查询结果"></textarea>
+                        </div>
+                    </div>
+                </form>
+
+                <form role="form" id="my_form2" action="" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <input type="text" id="count_exp" name="count_exp"  class="form-control " placeholder="请输入统计表达式">
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" id="btn_count" class="btn btn-primary">Run</button>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="count" name="count"  class="form-control" placeholder="统计结果" timestamp="0">
+                        </div>
+                    </div>
+                </form>
+
+                <form role="form" id="my_form_sum" action="" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <input type="text" id="sum_exp" name="sum_exp" class="form-control " placeholder="请输入求和表达式">
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" id='btn_sum' class="btn btn-primary">Run</button>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="sum" name="sum"  class="form-control " placeholder="求和结果" timestamp="0">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static "js/jquery-3.2.0.min.js"%}"></script>
+    <script type="text/javascript" src="{% static "js/jq-cookie/jquery.cookie.js"%}"></script>
+    <script>
+        $.ajaxSetup({
+        beforeSend: function(xhr, settings){
+          var csrftoken = $.cookie('csrftoken');
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+        });
+
+        var res_json = ""
+        var returncode = 1
+        $(function() {
+            $('#my_form').submit(function () {
+                //console.log("111");
+                var sub = $('#submit');
+                sub.text('loading...'); //点击出现正在加载按钮
+                $.ajax({
+                    url: '/plus/',
+                    type: 'post',
+                    dataType: 'json',
+                    data: $('#my_form').serialize(),
+                    success: function (data) {
+                        sub.text('Send'); //提交完成
+                        //console.log(data.body);
+                        //$('#show_activity_data').html(data.text);
+                        $('#body').val(data.body);
+                        $('#results').val(data.response);
+                        //$('#count').val(data.timestamp);
+                        //设置属性
+                        $('#count').attr("timestamp", data.timestamp);
+                        $('#sum').attr("timestamp", data.timestamp);
+                        if (data.returncode == 0){
+                            res_json = data.response
+                            returncode = data.returncode
+                        }
+
+                        //$("#show_code_data").html(syntaxHighlight(data))
+                    },
+                    error: function (data) {
+                        sub.text('submit');
+                    }
+                });
+                return false;
+            });
+        });
+
+        $(function() {
+            $('#my_form2').submit(function () {
+                //console.log("hahhahhh");
+                var sub = $('#btn_count');
+                var timestamp = parseInt($('#count').attr("timestamp"));
+
+                //var my_input = $('<input type="text" id="timestamp2" name="timestamp2" />');
+                //my_input.attr('timestamp2', timestamp2);
+                //
+                //my_count_form.append(my_input);
+
+                /////
+                var form_data = $('#my_form2');
+                var tmpInput=$("<input hidden='hidden' type='text' name='timestamp' />");
+                tmpInput.attr("value", timestamp);
+                form_data.append(tmpInput);
+
+                //var node=document.createElement('tt');
+                //node.setAttribute("timestamp", 'hahah');
+                //form_data.append(node)
+
+                //var form_data = new FormData($('#my_form2'));
+                //form.append("author", "hooyes");                   // 可以增加表单数据
+                //form_data.append("count_exp", form_data.get("count_exp"))
+                //form_data.append("timestamp", timestamp);
+
+                sub.text('loading...');
+                $.ajax({
+                    url: '/count/',
+                    //ontentType: false,
+                    //processData: false,
+                    type: 'post',
+                    dataType: 'json',
+                    data: form_data.serialize(),
+                    success: function (data) {
+                        sub.text('Run');
+                        if (data.returnCode == -1){
+                            $('#count').val("无效数据!");
+                        }else{
+                            $('#count').val(data.count);
+                        }
+                    },
+                    error: function (data) {
+                        sub.text('submit');
+                    }
+                });
+                return false;
+            });
+        });
+
+        $(function() {
+            $('#my_form_sum').submit(function () {
+                var sub = $('#btn_sum');
+                var timestamp = parseInt($('#sum').attr("timestamp"));
+
+                var form_data = $('#my_form_sum');
+                var tmpInput=$("<input hidden='hidden' type='text' name='timestamp' />");
+                tmpInput.attr("value", timestamp);
+                form_data.append(tmpInput);
+                sub.text('loading...');
+                $.ajax({
+                    url: '/sum/',
+                    type: 'post',
+                    dataType: 'json',
+                    data: form_data.serialize(),
+                    success: function (data) {
+                        sub.text('Run');
+                        if (data.returncode == -1){
+                            $('#sum').val("无效数据!");
+                        }else{
+                            $('#sum').val(data.sum);
+                        }
+                    },
+                    error: function (data) {
+                        sub.text('');
+                    }
+                });
+                return false;
+            });
+        });
+
+        $(function() {
+            $('#my_timestamp_form').submit(function () {
+                var sub = $('#btn_time');
+                var form_data = $('#my_timestamp_form');
+
+                sub.text('loading...');
+                $.ajax({
+                    url: '/trans_time/',
+                    type: 'post',
+                    dataType: 'json',
+                    data: form_data.serialize(),
+                    success: function (data) {
+                        sub.text('←→');
+                        if(data.returncode == 1){
+                            $('#unix_times').val(data.unix_times);
+                        }else if(data.returncode == 2){
+                            $('#usual_times').val(data.usual_times);
+                        }else if(data.returncode == -2){
+                            $('#usual_times').val("时间格式错误!");
+                        }else if(data.returncode == -3){
+                            $('#usual_times').val("时间戳格式错误!");
+                        }
+                    },
+                    error: function (data) {
+                        sub.text('←→');
+                    }
+                });
+                return false;
+            });
+        });
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' }
+        });
+    </script>
+    <script>
+    //执行一个laydate实例
+        laydate.render({
+          elem: '#usual_times' //指定元素
+          ,type: 'datetime'
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+{% include "json_utils/_head_js_css.html" %}
+<body>
+
+{% comment %}<form action="/add/" method="post" id="my_form">{% endcomment %}
+ <div class="header">
+        <h1 class="page-title">供货商报名活动</h1>
+
+<div class="row">
+    <div class="col-lg-6">
+        <label for="name" class="col-md-2" style="line-height:34px;">test: </label>
+        <form id="my_form" action="" method="post">
+    {% csrf_token %}
+    <div class="form-group row">
+        <label for="name" class="col-md-2" style="line-height:34px;">请求方式: </label>
+        <div class="col-md-10">
+            <select class="form-control" id="reqmethod" name="reqmethod" style="width:100px;height: 25px">
+            <option value="0">GET</option>
+            <option value="1">POST</option>
+            </select>
+        </div>
+    </div>
+    <input type="text" id="url" name="url" style="width:550px;height: 20px" >
+    <button type="submit" id="submit" style="width:60px;height: 25px">Send</button> <br>
+    <table>
+        <tr>
+            <td>
+                <a>Body:</a> <br>
+                <textarea id="body" rows="6" cols="70" name="body"></textarea> <br>
+            </td>
+            <td>
+                <a>参数化:</a> <br>
+                <textarea id="body_param" rows="6" cols="25" name="body_param"></textarea> <br>
+            </td>
+        </tr>
+    </table>
+
+    <a>Headers</a> <br>
+    <textarea id="headers" rows="6" cols="100" name="headers"></textarea> <br>
+    <a>JSON_PATH:</a> <input type="text" id="json_path" name="json_path" style="width:620px;height: 18px" > <br>
+    <a>条件表达式</a> <br>
+    <textarea id="
+    expressions" rows="3" cols="100" name="expressions"></textarea> <br>
+    <textarea rows="30" cols="100" id="results"></textarea>
+</form>
+    </div>
+</div>
+<form id="my_form2" action="" method="post" enctype="multipart/form-data">
+    <a>统计:</a><input type="text" id="count_exp" name="count_exp" style="width:300px;height: 20px" >
+    <button type="submit" id='btn_count' style="width:60px;height: 25px">Run</button>
+    <input type="text" id="count" name="count" style="width:310px;height: 20px" timestamp='0'> <br>
+</form>
+
+<form id="my_form_sum" action="" method="post">
+    <a>求和:</a><input type="text" id="sum_exp" name="sum_exp" style="width:300px;height: 20px" >
+    <button type="submit" id='btn_sum' style="width:60px;height: 25px">Run</button>
+    <input type="text" id="sum" name="sum" style="width:310px;height: 20px" timestamp='0'> <br>
+</form>
+
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static "js/jquery-3.2.0.min.js"%}"></script>
+    <script type="text/javascript" src="{% static "js/jq-cookie/jquery.cookie.js"%}"></script>
+    <script>
+        $.ajaxSetup({
+        beforeSend: function(xhr, settings){
+          var csrftoken = $.cookie('csrftoken');
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+        });
+
+        var res_json = ""
+        var returncode = 1
+        $(function() {
+            $('#my_form').submit(function () {
+                //console.log("111");
+                var sub = $('#submit');
+                sub.text('loading...'); //点击出现正在加载按钮
+                $.ajax({
+                    url: '/plus/',
+                    type: 'post',
+                    dataType: 'json',
+                    data: $('#my_form').serialize(),
+                    success: function (data) {
+                        sub.text('Send'); //提交完成
+                        //console.log(data.body);
+                        //$('#show_activity_data').html(data.text);
+                        $('#body').val(data.body);
+                        $('#results').val(data.response);
+                        //$('#count').val(data.timestamp);
+                        //设置属性
+                        $('#count').attr("timestamp", data.timestamp);
+                        $('#sum').attr("timestamp", data.timestamp);
+                        if (data.returncode == 0){
+                            res_json = data.response
+                            returncode = data.returncode
+                        }
+
+                        //$("#show_code_data").html(syntaxHighlight(data))
+                    },
+                    error: function (data) {
+                        sub.text('submit');
+                    }
+                });
+                return false;
+            });
+        });
+
+        $(function() {
+            $('#my_form2').submit(function () {
+                //console.log("hahhahhh");
+                var sub = $('#btn_count');
+                var timestamp = parseInt($('#count').attr("timestamp"));
+
+                //var my_input = $('<input type="text" id="timestamp2" name="timestamp2" />');
+                //my_input.attr('timestamp2', timestamp2);
+                //
+                //my_count_form.append(my_input);
+
+                /////
+                var form_data = $('#my_form2');
+                var tmpInput=$("<input hidden='hidden' type='text' name='timestamp' />");
+                tmpInput.attr("value", timestamp);
+                form_data.append(tmpInput);
+
+                //var node=document.createElement('tt');
+                //node.setAttribute("timestamp", 'hahah');
+                //form_data.append(node)
+
+                //var form_data = new FormData($('#my_form2'));
+                //form.append("author", "hooyes");                   // 可以增加表单数据
+                //form_data.append("count_exp", form_data.get("count_exp"))
+                //form_data.append("timestamp", timestamp);
+
+                sub.text('loading...');
+                $.ajax({
+                    url: '/count/',
+                    //ontentType: false,
+                    //processData: false,
+                    type: 'post',
+                    dataType: 'json',
+                    data: form_data.serialize(),
+                    success: function (data) {
+                        sub.text('Run');
+                        if (data.returnCode == -1){
+                            $('#count').val("无效数据!");
+                        }else{
+                            $('#count').val(data.count);
+                        }
+                    },
+                    error: function (data) {
+                        sub.text('submit');
+                    }
+                });
+                return false;
+            });
+        });
+
+        $(function() {
+            $('#my_form_sum').submit(function () {
+                var sub = $('#btn_sum');
+                var timestamp = parseInt($('#sum').attr("timestamp"));
+
+                var form_data = $('#my_form_sum');
+                var tmpInput=$("<input hidden='hidden' type='text' name='timestamp' />");
+                tmpInput.attr("value", timestamp);
+                form_data.append(tmpInput);
+                sub.text('loading...');
+                $.ajax({
+                    url: '/sum/',
+                    type: 'post',
+                    dataType: 'json',
+                    data: form_data.serialize(),
+                    success: function (data) {
+                        sub.text('Run');
+                        if (returncode == -1){
+                            $('#sum').val("无效数据!");
+                        }else{
+                            $('#sum').val(data.sum);
+                        }
+                    },
+                    error: function (data) {
+                        sub.text('submit');
+                    }
+                });
+                return false;
+            });
+        });
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% extends "json_utils/base.html" %}
+{% block title %}
+用户注册
+{% endblock %}
+
+{% block content %}
+
+<form method="POST">{% csrf_token %}
+<label><h1>用户注册</h1></label></br>
+
+{% comment%}
+{% for err_label,err_value in reg.errors.items %}
+    'err_label':'err_value'
+{% endfor %}
+{% endcomment %}
+
+<label>别名:</label>{{ reg.nickname }} {{reg.nickname.errors|safe}}</br>
+<label>用户名:</label>{{ reg.username }} {{reg.username.errors|safe}}</br>
+<label>密码:</label>{{ reg.password }}</br>
+<label>性别:</label>
+{% for sex in reg.sex %}
+   {{ sex }}
+{% endfor %}
+</br>
+<label>邮箱:</label>{{ reg.email }}{{reg.email.errors|safe}}</br>
+<label>电话:</label>{{ reg.phone }}</br>
+<label>生日:</label>{{ reg.birthday }}</br>
+<input type="submit" value="注册"/>
+</form>
+
+{% endblock %}
